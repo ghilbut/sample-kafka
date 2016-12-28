@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+
+  <!-- jquery -->
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+          crossorigin="anonymous"></script>
+  <!-- jquery ui -->
+  <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+          crossorigin="anonymous"></script>
+
+  <!-- bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+          integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+  <style>
+    #content {
+      padding: 10px;
+    }
+  </style>
+
+</head>
+<body>
+
+
+
+<div id="content">
+
+
+  <!-- Alert -->
+  <div class="outline first">
+    <div class="alert alert-danger" role="alert">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      <span class="sr-only">Error:</span>
+      This page is only tested on Mac OS X El Capitan and Chrome browser.
+    </div>
+  </div>
+
+
+  <!-- Producer -->
+  <div class="outline">
+    <div id="dynamodb-box" class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Test Kafka Producer</h3>
+      </div>
+      <div class="panel-body">
+
+        <button id="dynamodb-init" type="button" class="btn btn-default btn-xs">
+          <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Produce
+        </button>
+        <br>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- DC/OS cluster list -->
+  <div id="cluster-list" class="outline">
+    <div id="cluster-list-box" class="panel panel-default">
+      <div class="panel-heading">
+
+        <div class="input-group input-group-xs pull-right" style="width:30%">
+          <input id="new-cluster-name" class="form-control input-xs" aria-label="Text input with multiple buttons">
+          <div class="input-group-btn">
+            <button id="new-cluster-button" type="button" class="btn btn-default btn-xs" aria-label="ADD" disabled>
+              <span class="glyphicon glyphicon-plus"></span> ADD
+            </button>
+          </div>
+        </div>
+
+        <h3 class="panel-title">DC/OS cluster list</h3>
+      </div>
+
+      <!-- empty -->
+      <div id="cluster-list-empty" class="panel-body">
+        DC/OS cluster is not exists.
+      </div>
+
+      <!-- listed -->
+      <ul id="cluster-list-table" class="list-group">
+        <li class="list-group-item list-group-item-success">Dapibus ac facilisis in</li>
+        <li class="list-group-item list-group-item-info">Cras sit amet nibh libero</li>
+        <li class="list-group-item list-group-item-warning">Porta ac consectetur ac</li>
+        <li class="list-group-item list-group-item-danger">Vestibulum at eros</li>
+      </ul>
+
+    </div>
+  </div>
+
+</div><!-- content -->
+
+
+
+</body>
+</html>
