@@ -7,11 +7,13 @@ import com.ghilbut.sample.kafka.client.common.TestDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.errors.WakeupException;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Future;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
@@ -41,11 +43,11 @@ public class TestWorker implements Runnable {
 		for (int i = 0; i < loopCount; ++i) {
 			try {
 				int number = ThreadLocalRandom.current().nextInt(0, range);
-				TestDTO dto = new TestDTO();
+				TestDTO dto = new TestDTO(number);
 				ProducerRecord<Integer, TestDTO> record =
 					new ProducerRecord<>(topicName, number, dto);
-				//Future<RecordMetadata> metadata = producer.send(record);
-				//log.info("[TestWorker] metadata: {}", metadata);
+				Future<RecordMetadata> metadata = producer.send(record);
+				log.info("[TestWorker] metadata: {}", metadata);
 
 				Map<String, Object> message = new HashMap<>();
 				message.put("type", producer);

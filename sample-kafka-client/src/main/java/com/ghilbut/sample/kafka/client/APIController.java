@@ -24,6 +24,6 @@ public class APIController {
 
 	@RequestMapping(path="/test", method= RequestMethod.PUT)
 	public void test() {
-		producer.send("test", 3, 20, 100);
+		producer.send("sample", 3, 20, 100);
 	}
 }
