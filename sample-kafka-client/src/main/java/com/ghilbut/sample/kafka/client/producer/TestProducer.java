@@ -5,7 +5,9 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 
 import java.util.Properties;
+import java.util.Queue;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import static java.util.concurrent.Executors.newFixedThreadPool;
 
@@ -15,21 +17,36 @@ import static java.util.concurrent.Executors.newFixedThreadPool;
 @Slf4j
 public class TestProducer {
 
-	private ExecutorService threadPool;
+	private static final int MAX_MESSAGE_COUNT = 100;
+	private static final int WORKER_COUNT = 3;
+
 	private Producer producer;
+	private Queue<Integer> queue;
+	private ExecutorService threadPool;
+	private TestProduceWorker[] workers;
 
-	public TestProducer(Properties props) {
+	public TestProducer(String topicName, Properties props) {
 		this.producer = new KafkaProducer(props);
-	}
+		this.queue = new LinkedBlockingQueue<>(MAX_MESSAGE_COUNT);
+		this.threadPool = newFixedThreadPool(WORKER_COUNT);
+		this.workers = new TestProduceWorker[WORKER_COUNT];
 
-	public void send(String topicName, int threadCount, int range, int loopCount) {
-		threadPool = newFixedThreadPool(threadCount);
-		for (int i = 0; i < threadCount; ++i) {
-			threadPool.submit(new TestWorker(topicName, i, range, loopCount, producer));
+		for (int i = 0; i < WORKER_COUNT; ++i) {
+			TestProduceWorker worker = new TestProduceWorker(i, topicName, producer, queue);
+			threadPool.submit(worker);
+			workers[i] = worker;
 		}
 	}
 
+	public void send(int number) {
+		queue.add(number);
+	}
+
 	public void close() {
+		for (TestProduceWorker worker : workers) {
+			worker.stop();
+		}
+		threadPool.shutdown();
 		producer.close();
 	}
 }

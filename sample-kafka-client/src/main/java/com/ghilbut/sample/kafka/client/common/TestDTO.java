@@ -3,6 +3,7 @@ package com.ghilbut.sample.kafka.client.common;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.Calendar;
 
 /**
@@ -12,11 +13,13 @@ import java.util.Calendar;
 @NoArgsConstructor
 public class TestDTO {
 
+	private int id;
 	private int number;
-	private long timestamp;
+	private Date timestamp;
 
-	public TestDTO(int number) {
+	public TestDTO(int id, int number) {
+		this.id = id;
 		this.number = number;
-		this.timestamp = Calendar.getInstance().getTime().getTime();
+		this.timestamp = Calendar.getInstance().getTime();
 	}
 }

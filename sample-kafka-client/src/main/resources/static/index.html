@@ -45,14 +45,26 @@
 
   <!-- Producer -->
   <div class="outline">
-    <div id="dynamodb-box" class="panel panel-default">
+    <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">Test Kafka Producer</h3>
       </div>
       <div class="panel-body">
 
-        <button id="sample-test" type="button" class="btn btn-default btn-xs">
-          <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Produce
+        <div class="input-group input-group-sm">
+          <span class="input-group-addon">total message count</span>
+          <input type="text" class="form-control" placeholder="default=100" aria-describedby="sizing-addon3" id="produce-count">
+        </div>
+        <br>
+
+        <div class="input-group input-group-sm">
+          <span class="input-group-addon">random value range&nbsp;</span>
+          <input type="text" class="form-control" placeholder="default=7" aria-describedby="sizing-addon3" id="produce-range">
+        </div>
+        <br>
+
+        <button id="produce-button" type="button" class="btn btn-default btn-xs">
+          <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Produce
         </button>
         <br>
 
@@ -62,35 +74,28 @@
 
 
   <!-- DC/OS cluster list -->
-  <div id="cluster-list" class="outline">
-    <div id="cluster-list-box" class="panel panel-default">
+  <div class="outline">
+    <div class="panel panel-default">
       <div class="panel-heading">
+        <h3 class="panel-title">Test Kafka Consumer (not implemented yet)</h3>
+      </div>
+      <div class="panel-body">
 
-        <div class="input-group input-group-xs pull-right" style="width:30%">
-          <input id="new-cluster-name" class="form-control input-xs" aria-label="Text input with multiple buttons">
-          <div class="input-group-btn">
-            <button id="new-cluster-button" type="button" class="btn btn-default btn-xs" aria-label="ADD" disabled>
-              <span class="glyphicon glyphicon-plus"></span> ADD
-            </button>
-          </div>
+        <div class="input-group input-group-sm">
+          <span class="input-group-addon">consumer count</span>
+          <input type="text" class="form-control" placeholder="default=3" aria-describedby="sizing-addon3" id="consumer-count">
         </div>
+        <br>
 
-        <h3 class="panel-title">DC/OS cluster list</h3>
+        <button id="consume-start-button" type="button" class="btn btn-default btn-xs">
+          <span class="glyphicon glyphicon-play" aria-hidden="true"></span> Start
+        </button>
+        <button id="consume-stop-button" type="button" class="btn btn-default btn-xs">
+          <span class="glyphicon glyphicon-stop" aria-hidden="true"></span> Stop
+        </button>
+        <br>
+
       </div>
-
-      <!-- empty -->
-      <div id="cluster-list-empty" class="panel-body">
-        DC/OS cluster is not exists.
-      </div>
-
-      <!-- listed -->
-      <ul id="cluster-list-table" class="list-group">
-        <li class="list-group-item list-group-item-success">Dapibus ac facilisis in</li>
-        <li class="list-group-item list-group-item-info">Cras sit amet nibh libero</li>
-        <li class="list-group-item list-group-item-warning">Porta ac consectetur ac</li>
-        <li class="list-group-item list-group-item-danger">Vestibulum at eros</li>
-      </ul>
-
     </div>
   </div>
 
@@ -98,11 +103,23 @@
 
 
 <script>
-document.getElementById('sample-test').onclick = function () {
-  var xhr = new XMLHttpRequest();
-  xhr.open('PUT', '/v1/api/test');
-  xhr.send();
-}
+
+  (function () {
+    var count = document.getElementById('produce-count');
+    var range = document.getElementById('produce-range');
+
+    document.getElementById('produce-button').onclick = function () {
+      var xhr = new XMLHttpRequest();
+      xhr.open('PUT', '/v1/api/produce');
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.send(JSON.stringify({'count': count.value || 100, 'range': range.value || 7}));
+    }
+  })();
+
+  (function () {
+
+  })();
+
 </script>
 
 

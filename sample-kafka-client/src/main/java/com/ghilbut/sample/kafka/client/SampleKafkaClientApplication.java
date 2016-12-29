@@ -15,18 +15,20 @@ import java.util.Properties;
 @SpringBootApplication
 public class SampleKafkaClientApplication {
 
+	private static final String TOPIC_NAME = "sample";
+
 	public static void main(String[] args) {
 		SpringApplication.run(SampleKafkaClientApplication.class, args);
 	}
 
-	@Bean
+	@Bean(destroyMethod = "close")
 	public TestProducer producer() {
 		Properties props = new Properties();
 		props.put("bootstrap.servers", "localhost:9092");
 		props.put("key.serializer", IntegerSerializer.class.getName());
 		props.put("value.serializer", TestDTOSerializer.class.getName());
 		props.put("compression.type", "lz4");
-		return new TestProducer(props);
+		return new TestProducer(TOPIC_NAME, props);
 	}
 
 	@Bean
